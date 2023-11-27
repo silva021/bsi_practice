@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 void lerFuncionario(char *funcao, int *anosExperiencia, int *horasContratada, int *horasTrabalhada);
-void imprimirFolhaPagamento(int salarioBruto, int descontoINSS, int descontoIR);
+void imprimirFolhaPagamento(int salarioBruto, int descontoINSS, int descontoIR,int horasExcendentes);
 void calcularSalario(
     char funcao,
     int anosExperiencia,
@@ -31,11 +31,11 @@ int main(void)
         char funcao;
         int anosExperiencia, horasContratada, horasTrabalhada, salarioBruto, descontoINSS, descontoIR;
 
-        printf("Funcionario %d", c);
+        printf("\nFuncionario %d", c);
         lerFuncionario(&funcao, &anosExperiencia, &horasContratada, &horasTrabalhada);
         calcularSalario(funcao, anosExperiencia, horasContratada, horasTrabalhada, &salarioBruto, &descontoINSS, &descontoIR);
-        printf("Folha de Pagamento do Func. %d", c);
-        imprimirFolhaPagamento(salarioBruto, descontoINSS, descontoIR);
+        printf("\nFolha de Pagamento do Func. %d", c);
+        imprimirFolhaPagamento(salarioBruto, descontoINSS, descontoIR, (horasTrabalhada - horasContratada));
 
     }
 
@@ -165,15 +165,15 @@ void calcularSalario(
 
     if (horasExcedentes >= 1 && horasExcedentes <= 13)
     {
-        valorHoraExtra = valorHoraExtra + ((23 / 100) * valorHoraExtra);
+        valorHoraExtra = valorHoraExtra + ((23 / 100.0) * valorHoraExtra);
     }
     else if (horasExcedentes >= 14 && horasExcedentes <= 22)
     {
-        valorHoraExtra = valorHoraExtra + ((37 / 100) * valorHoraExtra);
+        valorHoraExtra = valorHoraExtra + ((37 / 100.0) * valorHoraExtra);
     }
-    else
+    else if (horasExcedentes > 22)
     {
-        valorHoraExtra = valorHoraExtra + ((56 / 100) * valorHoraExtra);
+        valorHoraExtra = valorHoraExtra + ((56 / 100.0) * valorHoraExtra);
     }
 
     int auxSalarioBruto = (valorHora * horasContratada) + valorHoraExtra;
@@ -211,7 +211,14 @@ void calcularSalario(
 void imprimirFolhaPagamento(
     int salarioBruto,
     int descontoINSS,
-    int descontoIR)
+    int descontoIR,
+    int horasExcendentes)
 {
-    printf("\n- Salario Bruto...(R$): %d \n- Desconto INSS...(R$): %d\n- Desconto IR.....(R$): %d\n- Salario Liquido.(R$): %d", salarioBruto, descontoINSS, descontoIR, (salarioBruto - descontoINSS - descontoIR));
+    printf("\n- Salario Bruto...(R$): %d", salarioBruto);
+    if(horasExcendentes > 0) {
+        printf("\n- Horas Excedentes (h): %dhr", horasExcendentes);
+    }
+    printf("\n- Desconto INSS...(R$): %d", descontoINSS);
+    printf("\n- Desconto IR.....(R$): %d", descontoIR);
+    printf("\n- Salario Liquido.(R$): %d", (salarioBruto - descontoINSS - descontoIR));
 }

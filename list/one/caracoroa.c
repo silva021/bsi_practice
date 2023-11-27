@@ -10,7 +10,7 @@ int main(void)
     {
         printf("Quantas rodadas teve: ");
         scanf("%d", &quantidadeDeJogadas);
-    } while (quantidadeDeJogadas < 0 || quantidadeDeJogadas > 10);
+    } while (quantidadeDeJogadas < 0 || quantidadeDeJogadas > 10000);
 
     for (int c = 1; c <= quantidadeDeJogadas; c++)
     {
